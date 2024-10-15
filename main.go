@@ -9,11 +9,11 @@ import (
 func main() {
     http.HandleFunc("/", formHandler) // Handler for editing form
     http.HandleFunc("/create", submitHandler) // Handler for form submission
-	// fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":8080", nil) // starts HTTP server and listens on port 8080
 }
 
-func formHandler(w http.ResponseWriter, r *http.Request) {
+// ReponseWriter sends response, Request contains request data
+func formHandler(w http.ResponseWriter, r *http.Request) { 
 
     // Load the task creation form from the template file
     tmpl, err := template.ParseFiles("templates/eventForm.html")
@@ -33,23 +33,27 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 func submitHandler(w http.ResponseWriter, r *http.Request) {
     
 	if r.Method == http.MethodPost {
+
+	// Parses form data
         r.ParseForm()
         taskName := r.FormValue("taskName")
         taskTime := r.FormValue("taskTime")
-		taskDate := r.FormValue("taskDate")
+	taskDate := r.FormValue("taskDate")
+		
         // Load the output template
         tmpl, err := template.ParseFiles("templates/output.html")
         
 
         // Create a data structure to pass to the template
         data := struct {
-            TaskName string
-            TaskTime string
-			TaskDate string
+		
+		TaskName string
+		TaskTime string
+		TaskDate string
         }{
-            TaskName: taskName,
-            TaskTime: taskTime,
-			TaskDate: taskDate,
+            	TaskName: taskName,
+            	TaskTime: taskTime,
+		TaskDate: taskDate,
         }
 
         // Execute the template with the data
