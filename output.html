@@ -3,12 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Output</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            
+            text-align: left;
+        }
+        
+        
+    </style>
 </head>
 <body>
-    <h2>Task Summary</h2>
-    <p>Task: {{.TaskName}}</p>
-    <p>Scheduled For: {{.TaskTime}} on {{.TaskDate}}</p>
+    <h2>New Task Summary</h2>
+    <p>Task: {{.NewTask.TaskName}}</p>
+    <p>Scheduled For: {{.NewTask.TaskTime}} on {{.NewTask.TaskDate}}</p>
+
+    <h2>All Tasks</h2>
+    <table>
+        <tr>
+            <th>Task Name</th>
+            <th>Time</th>
+            <th>Date</th>
+        </tr>
+        {{range .AllTasks}}
+        <tr>
+            <td>{{.TaskName}}</td>
+            <td>{{.TaskTime}}</td>
+            <td>{{.TaskDate}}</td>
+        </tr>
+        {{end}}
+    </table>
+
     <a href="/">Create New Task</a>
-    
 </body>
 </html>
